@@ -26,6 +26,9 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<ProductInputDto>>  getAllItems()
     {
+        //output should be of type Product DTO , do necessary changes
+
+
         List<ProductInputDto> products=productService.getAllItems().stream().map(
                 product -> modelMapper.map(product, ProductInputDto.class)).collect(Collectors.toList());
         return new ResponseEntity<>(products, HttpStatus.OK);

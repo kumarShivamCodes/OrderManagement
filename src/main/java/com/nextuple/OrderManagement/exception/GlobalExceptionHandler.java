@@ -30,4 +30,17 @@ public class GlobalExceptionHandler {
         return new ErrorResponse(HttpStatus.BAD_REQUEST.value(),"Product Already Exists with same name.");
     }
 
+    @ExceptionHandler(InvalidQuantityException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleInvalidQuantityException(InvalidQuantityException ex)
+    {
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(),ex.getMessage());
+    }
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleOrderNotFoundException(OrderNotFoundException ex)
+    {
+        return new ErrorResponse(HttpStatus.NOT_FOUND.value(),ex.getMessage());
+    }
 }
