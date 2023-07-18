@@ -4,7 +4,7 @@ import com.nextuple.OrderManagement.dao.OrderDao;
 import com.nextuple.OrderManagement.dao.ProductDao;
 import com.nextuple.OrderManagement.entity.Order;
 import com.nextuple.OrderManagement.entity.Product;
-import com.nextuple.OrderManagement.exception.InvalidPriceException;
+import com.nextuple.OrderManagement.enumerations.OrderType;
 import com.nextuple.OrderManagement.exception.InvalidQuantityException;
 import com.nextuple.OrderManagement.exception.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,16 @@ public class OrderServiceImplementation implements OrderService{
 
             if(order.getQuantity()<0)
                 throw  new InvalidQuantityException("Product Quantity can't be negative: "+ order.getQuantity());
-            product.setQuantity(product.getQuantity()+order.getQuantity());
+
+            if (order.getType() == OrderType.PURCHASE_ORDER) {
+                product.setQuantity(product.getQuantity() + order.getQuantity());
+            } else if (order.getType() == OrderType.SALE_ORDER) {
+                int updatedQuantity = product.getQuantity() - order.getQuantity();
+                if (updatedQuantity < 0) {
+                    throw new InvalidQuantityException("Insufficient quantity for product: " + prodName + "Available Qty: " +product.getQuantity());
+                }
+                product.setQuantity(updatedQuantity);
+            }
             productsWithQtyUpdated.add(product);
             newOrders.add(order);
         }

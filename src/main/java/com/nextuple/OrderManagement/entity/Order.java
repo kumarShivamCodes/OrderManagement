@@ -1,5 +1,6 @@
 package com.nextuple.OrderManagement.entity;
 
+import com.nextuple.OrderManagement.enumerations.OrderType;
 import lombok.Data;
 import lombok.Generated;
 import org.springframework.data.annotation.Id;
@@ -15,6 +16,6 @@ public class Order {
     private String id = UUID.randomUUID().toString();
     private String productName;
     private Integer quantity;
-    private String type; //purchase or sell
+    private OrderType type; //purchase or sell
 
 }
