@@ -40,7 +40,7 @@ public class OrderController {
         return new ResponseEntity<>(orderDto,HttpStatus.OK);
     }
 
-    @PostMapping("/purchase")
+    @PostMapping
     public ResponseEntity<List<OrderDto>> createOrderForPurchase(@RequestBody List<OrderDto> orderDtoList)
     {
         // convert Dto to entity

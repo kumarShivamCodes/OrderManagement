@@ -51,7 +51,7 @@ public class OrderServiceImplementation implements OrderService{
             } else if (order.getType() == OrderType.SALE_ORDER) {
                 int updatedQuantity = product.getQuantity() - order.getQuantity();
                 if (updatedQuantity < 0) {
-                    throw new InvalidQuantityException("Insufficient quantity for product: " + prodName + "Available Qty: " +product.getQuantity());
+                    throw new InvalidQuantityException("Insufficient quantity for product: " + prodName + " Available Qty: " +product.getQuantity());
                 }
                 product.setQuantity(updatedQuantity);
             }
