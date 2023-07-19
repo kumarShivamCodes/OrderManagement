@@ -24,13 +24,13 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @GetMapping
-    public ResponseEntity<List<ProductInputDto>>  getAllItems()
+    public ResponseEntity<List<ProductOutputDto>>  getAllItems()
     {
         //output should be of type Product DTO , do necessary changes
 
 
-        List<ProductInputDto> products=productService.getAllItems().stream().map(
-                product -> modelMapper.map(product, ProductInputDto.class)).collect(Collectors.toList());
+        List<ProductOutputDto> products=productService.getAllItems().stream().map(
+                product -> modelMapper.map(product, ProductOutputDto.class)).collect(Collectors.toList());
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 

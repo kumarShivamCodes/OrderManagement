@@ -40,7 +40,7 @@ public class OrderController {
         return new ResponseEntity<>(orderOutputDto,HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/purchase")
     public ResponseEntity<List<OrderOutputDto>> createOrderForPurchase(@RequestBody List<OrderInputDto> orderInputDtoList)
     {
         // convert Dto to entity
@@ -48,9 +48,25 @@ public class OrderController {
                 modelMapper.map(orderInputDto,Order.class)).collect(Collectors.toList());
 
         //convert entity to Dto and use OrderDao
-        List<OrderOutputDto> addedOrders=orderService.createOrder(orders).stream().map(order->
+        List<OrderOutputDto> addedOrders=orderService.createOrderPurchase(orders).stream().map(order->
                 modelMapper.map(order, OrderOutputDto.class)).collect(Collectors.toList());
 
         return new ResponseEntity<>(addedOrders,HttpStatus.CREATED);
     }
+
+    @PostMapping("/sale")
+    public ResponseEntity<List<OrderOutputDto>> createOrderForSale(@RequestBody List<OrderInputDto> orderInputDtoList)
+    {
+        // convert Dto to entity
+        List<Order> orders= orderInputDtoList.stream().map(orderInputDto ->
+                modelMapper.map(orderInputDto,Order.class)).collect(Collectors.toList());
+
+        //convert entity to Dto and use OrderDao
+        List<OrderOutputDto> addedOrders=orderService.createOrderSell(orders).stream().map(order->
+                modelMapper.map(order, OrderOutputDto.class)).collect(Collectors.toList());
+
+        return new ResponseEntity<>(addedOrders,HttpStatus.CREATED);
+    }
+
+
 }

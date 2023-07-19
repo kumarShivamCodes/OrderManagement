@@ -6,5 +6,5 @@ import lombok.Data;
 public class OrderInputDto {
     private String productName;
     private Integer quantity;
-    private String type;
+
 }

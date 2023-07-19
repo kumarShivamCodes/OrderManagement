@@ -10,5 +10,7 @@ public interface OrderService {
 
     Order getOrderById(String id);
 
-    List<Order> createOrder(List<Order> orders);
+    List<Order> createOrderPurchase(List<Order> orders);
+
+    List<Order> createOrderSell(List<Order> orders);
 }
