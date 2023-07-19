@@ -1,5 +1,6 @@
 package com.nextuple.OrderManagement.service;
 
+import com.nextuple.OrderManagement.service.TransactionService;
 import com.nextuple.OrderManagement.dao.OrderDao;
 import com.nextuple.OrderManagement.dao.ProductDao;
 import com.nextuple.OrderManagement.entity.Order;
@@ -20,6 +21,9 @@ public class OrderServiceImplementation implements OrderService{
     private OrderDao orderDao;
     @Autowired
     private ProductDao productDao;
+
+    @Autowired
+    private TransactionService transactionService;
 
     @Override
     public List<Order> getAllOrders() {
@@ -62,7 +66,10 @@ public class OrderServiceImplementation implements OrderService{
             newOrders.add(order);
         }
         productDao.addItem(productsWithQtyUpdated);
-        return orderDao.createOrder(newOrders);
+
+        List <Order>newOrders2= orderDao.createOrder(newOrders);
+        transactionService.createTransaction(newOrders2);
+        return newOrders2;
     }
 
     @Override
