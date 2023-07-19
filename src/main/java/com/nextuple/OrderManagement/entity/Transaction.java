@@ -15,6 +15,8 @@ import java.util.List;
 public class Transaction {
     @Id
     private String transactionId;
-    List<OrderDetails> orderDetailsList;
+    private List<OrderDetails> orderDetailsList;
+    private Double totalOrderAmount;
+
 
 }

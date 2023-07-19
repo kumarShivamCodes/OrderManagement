@@ -8,7 +8,7 @@ import java.util.List;
 @Component
 public class DefaultTransactionFactory implements TransactionFactory{
     @Override
-    public Transaction createTransaction(String transactionId, List<OrderDetails> orderDetailsList) {
-        return new Transaction(transactionId, orderDetailsList);
+    public Transaction createTransaction(String transactionId, List<OrderDetails> orderDetailsList, Double totalOrderAmount) {
+        return new Transaction(transactionId, orderDetailsList,totalOrderAmount);
     }
 }

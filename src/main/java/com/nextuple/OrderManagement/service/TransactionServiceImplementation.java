@@ -37,7 +37,7 @@ public class TransactionServiceImplementation implements TransactionService{
 
         List<OrderDetails> orderDetailsList = new ArrayList<>();
 
-        int totalOrderAmount=0;
+        Double totalOrderAmount=0.0;
 
          for(Order order:orders)
          {
@@ -51,7 +51,7 @@ public class TransactionServiceImplementation implements TransactionService{
         String transactionId = generateUniqueTransactionId();
 
         // Create the Transaction using the TransactionFactory
-        Transaction transaction = transactionFactory.createTransaction(transactionId, orderDetailsList);
+        Transaction transaction = transactionFactory.createTransaction(transactionId, orderDetailsList,totalOrderAmount);
 
         // save transaction
 
