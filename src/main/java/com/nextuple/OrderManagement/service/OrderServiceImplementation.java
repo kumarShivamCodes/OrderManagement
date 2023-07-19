@@ -107,8 +107,9 @@ public class OrderServiceImplementation implements OrderService{
             productsWithQtyUpdated.add(product);
             newOrders.add(order);
         }
-        productDao.addItem(productsWithQtyUpdated);
-        return orderDao.createOrder(newOrders);
+        List <Order>newOrders2= orderDao.createOrder(newOrders);
+        transactionService.createTransaction(newOrders2);
+        return newOrders2;
 
 
     }
