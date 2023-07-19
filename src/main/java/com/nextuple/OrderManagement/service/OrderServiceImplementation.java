@@ -47,13 +47,28 @@ public class OrderServiceImplementation implements OrderService{
                 throw  new InvalidQuantityException("Product Quantity can't be negative: "+ order.getQuantity());
 
             if (order.getType() == OrderType.PURCHASE_ORDER) {
+                //update product quantity
                 product.setQuantity(product.getQuantity() + order.getQuantity());
+
+                // update order's product price
+                order.setProductPrice(product.getPrice());
+
+                //update order price
+                order.setOrderPrice(order.getQuantity()*product.getPrice());
+
+
             } else if (order.getType() == OrderType.SALE_ORDER) {
                 int updatedQuantity = product.getQuantity() - order.getQuantity();
                 if (updatedQuantity < 0) {
                     throw new InvalidQuantityException("Insufficient quantity for product: " + prodName + " Available Qty: " +product.getQuantity());
                 }
                 product.setQuantity(updatedQuantity);
+
+                // update order's product price
+                order.setProductPrice(product.getPrice());
+
+                //update order price
+                order.setOrderPrice(order.getQuantity()*product.getPrice());
             }
             productsWithQtyUpdated.add(product);
             newOrders.add(order);

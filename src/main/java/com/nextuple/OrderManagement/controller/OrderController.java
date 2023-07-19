@@ -1,7 +1,7 @@
 package com.nextuple.OrderManagement.controller;
 
-import com.nextuple.OrderManagement.dao.OrderDao;
-import com.nextuple.OrderManagement.dto.OrderDto;
+import com.nextuple.OrderManagement.dto.OrderInputDto;
+import com.nextuple.OrderManagement.dto.OrderOutputDto;
 import com.nextuple.OrderManagement.entity.Order;
 import com.nextuple.OrderManagement.service.OrderService;
 import org.modelmapper.ModelMapper;
@@ -24,32 +24,32 @@ public class OrderController {
     private ModelMapper modelMapper;
 
     @GetMapping
-    public ResponseEntity<List<OrderDto>> getAllOrders()
+    public ResponseEntity<List<OrderOutputDto>> getAllOrders()
     {
-        List<OrderDto> orders=orderService.getAllOrders().stream().map(
-                order -> modelMapper.map(order,OrderDto.class)).collect(Collectors.toList());
+        List<OrderOutputDto> orders=orderService.getAllOrders().stream().map(
+                order -> modelMapper.map(order, OrderOutputDto.class)).collect(Collectors.toList());
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderDto> getOrderById(@PathVariable String id)
+    public ResponseEntity<OrderOutputDto> getOrderById(@PathVariable String id)
     {
         Order existingOrder= orderService.getOrderById(id);
 
-        OrderDto orderDto=modelMapper.map(existingOrder,OrderDto.class);
-        return new ResponseEntity<>(orderDto,HttpStatus.OK);
+        OrderOutputDto orderOutputDto =modelMapper.map(existingOrder, OrderOutputDto.class);
+        return new ResponseEntity<>(orderOutputDto,HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<List<OrderDto>> createOrderForPurchase(@RequestBody List<OrderDto> orderDtoList)
+    public ResponseEntity<List<OrderOutputDto>> createOrderForPurchase(@RequestBody List<OrderInputDto> orderInputDtoList)
     {
         // convert Dto to entity
-        List<Order> orders=orderDtoList.stream().map( orderDto ->
-                modelMapper.map(orderDto,Order.class)).collect(Collectors.toList());
+        List<Order> orders= orderInputDtoList.stream().map(orderInputDto ->
+                modelMapper.map(orderInputDto,Order.class)).collect(Collectors.toList());
 
         //convert entity to Dto and use OrderDao
-        List<OrderDto> addedOrders=orderService.createOrder(orders).stream().map( order->
-                modelMapper.map(order,OrderDto.class)).collect(Collectors.toList());
+        List<OrderOutputDto> addedOrders=orderService.createOrder(orders).stream().map(order->
+                modelMapper.map(order, OrderOutputDto.class)).collect(Collectors.toList());
 
         return new ResponseEntity<>(addedOrders,HttpStatus.CREATED);
     }

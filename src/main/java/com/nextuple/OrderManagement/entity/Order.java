@@ -17,5 +17,7 @@ public class Order {
     private String productName;
     private Integer quantity;
     private OrderType type; //purchase or sell
+    private Double productPrice; // price of product
+    private Double orderPrice; //total price per order created
 
 }
